@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'pg', '0.12.2'
 
+# Bootstrao framework converts LESS to SASS
+gem 'bootstrap-sass', '2.1'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 group :development do
