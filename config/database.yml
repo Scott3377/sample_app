@@ -7,8 +7,8 @@ development:
   adapter: postgresql
   host: localhost
   encoding: unicode
-  database: 
-  username: 
+  database: scott3377-dev
+  username: scott3377
   password:
 #   adapter: sqlite3
 #   database: db/development.sqlite3
@@ -22,8 +22,8 @@ test:
   adapter: postgresql
   host: localhost
   encoding: unicode
-  database:
-  username:
+  database: scott3377-test
+  username: scott3377
   password:
   # adapter: sqlite3
   # database: db/test.sqlite3
@@ -38,6 +38,6 @@ production:
   adapter: postgresql
   host: localhost
   encoding: unicode
-  database: 
-  username: 
+  database: scott3377
+  username: scott3377
   password:
