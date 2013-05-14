@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'pg', '0.12.2'
+gem 'faker', '1.0.1'
+gem 'will_paginate', '3.0.3'
+gem 'bootstrap-will_paginate', '0.0.6'
 
 # Bootstrap framework converts LESS to SASS
 gem 'bootstrap-sass', '2.1'
