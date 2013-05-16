@@ -2,20 +2,24 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
+  before_filter :signed_in_user_filter, only: [:new, :create]
 
   def index
     @users = User.paginate(page: params[:page])
   end
 
   def new
+    #redirect_to(root_path) if signed_in?
     @user = User.new
   end
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def create
+    #redirect_to(root_path) if signed_in?
     @user = User.new(params[:user])
     if @user.save
       # Handle a successful save
@@ -44,19 +48,24 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
-    redirect_to users_url
+    if current_user?(@user)
+      redirect_to root_path, notice: "You can't destroy yourself."
+    else
+      User.find(params[:id]).destroy
+      flash[:success] = "User destroyed."
+      redirect_to users_url
+    end
   end
 
   private
 
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
+    # ( Moved to sessions_helper.rb )
+    # def signed_in_user
+    #   unless signed_in?
+    #     store_location
+    #     redirect_to signin_url, notice: "Please sign in."
+    #   end
+    # end
 
     def correct_user
       @user = User.find(params[:id])
@@ -64,7 +73,11 @@ class UsersController < ApplicationController
     end
 
     def admin_user
+      @user = User.find(params[:id])
       redirect_to(root_path) unless current_user.admin?
     end
 
+    def signed_in_user_filter
+      redirect_to(root_path) if signed_in?
+    end
 end
