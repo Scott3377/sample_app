@@ -4,7 +4,7 @@
     <%= link_to feed_item.user.name, feed_item.user %>
   </span>
   <span class="content">
-    <%= feed_item.content %>
+    <%= wrap(feed_item.content) %>
   </span>
   <span class="timestamp">
     Posted

@@ -37,6 +37,45 @@ describe "Static pages" do
 					page.should have_selector("li##{item.id}", text: item.content)
 				end
 			end
+
+			describe "follower/following counts" do
+				let(:other_user) { FactoryGirl.create(:user) }
+				before do
+					other_user.follow!(user)
+					visit root_path
+				end
+
+				it { should have_link("0 following", href: following_user_path(user)) }
+				it { should have_link("1 followers", href: followers_user_path(user)) }
+			end
+
+			# describe "pagination" do
+
+			# 	before(:all) { 30.times { FactoryGirl.create(:micropost, user: user) }  }
+			# 	after(:all) { user.microposts.delete_all }
+
+			# 	it { should have_selector('div.pagination') }
+
+			# 	it "should list each micropost" do
+			# 		user.microposts.paginate(page: 1).each do |micropost|
+			# 			page.should have_selector('li', text: micropost.content)
+			# 		end
+			# 	end
+			# end
+
+			it "should not have delete links for microposts not created by current user" do
+				user.feed.each do |item|
+					if item.user == user
+						page.should have_selector("a", text: "delete")
+					end
+				end
+			end
+			# describe "as signed in user" do
+			# 	before { visit root_url }
+			# 	it "should not appear for microposts not created by current user" do
+			# 		expect { }
+			# 	end
+			# end
 		end
 	end
 
